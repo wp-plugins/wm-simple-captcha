@@ -473,9 +473,9 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 		function deactivate() {
 			delete_option('wmsimplecaptcha_activated_plugin_error');
 			//for testing
-			update_option('wmsimplecaptcha', array());	
-			delete_option('wmsimplecaptcha_per_page_default');
-			delete_option('wmsimplecaptcha_activated_plugin_error');
+			//update_option('wmsimplecaptcha', array());	
+			//delete_option('wmsimplecaptcha_per_page_default');
+			//delete_option('wmsimplecaptcha_activated_plugin_error');
 			return true;
 		}
 		
