@@ -1,5 +1,5 @@
 === WM Simple Captcha ===
-Contributors: http://www.web-mumbai.com/
+Contributors: http://plugins.web-mumbai.com/
 Tags: simple captcha, registration captcha, custom captcha image, register captcha image
 Requires at least: 3.6
 Tested up to: 3.8.1
@@ -45,11 +45,10 @@ Automatic installation is the easiest option as WordPress handles the file trans
 == Screenshots ==
 
 1. The overview screen registration.
-2. Captcha Preview in Wordpress admin "WM Simple Captcha setting" page.
+2. "WM Simple Captcha setting" page.
 3. Captcha Image Settings.
 4. Form Settings.
-5. Form Error.
-6. Custom CSS.
+5. Form Error and custom CSS
 
 == Frequently Asked Questions ==
 = Can I change background color ? =
