@@ -34,6 +34,7 @@ Captcha image for registration page, customize captcha image according to your t
 * Enable/Disable refresh button
 * Change refresh images as your theme
 * Not case sensitive
+
 In Short you can change captcha image style as your theme style. 
 
 
