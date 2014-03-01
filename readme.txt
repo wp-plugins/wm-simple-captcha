@@ -1,6 +1,6 @@
 === WM Simple Captcha ===
 Contributors: http://plugins.web-mumbai.com/
-Tags: simple captcha, registration captcha, custom captcha image, register captcha image
+Tags: simple captcha, registration captcha, custom captcha image, register captcha image, theme my captcha
 Requires at least: 3.6
 Tested up to: 3.8.1
 Stable tag: 1.0
@@ -10,13 +10,32 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Captcha image for registration page, customize according to your theme.
 
 == Description ==
-Captcha image for registration page, customize according to your theme.
+
+Captcha image for registration page, customize captcha image according to your theme. Change image width, height, background color, set possible characters, add space between two characters, adjust font size, change form label, add your custom css, enable/disable refresh button, change refresh button. Many think more on customization.
 
 = Features =
 
 * Enable/Disable Captcha for wordpress registration page
 * Set the captcha image with
 * Set  the captcha image height
+* Set the captcha possible characters length
+* Adjust font size
+* Enable space between characters
+* Change font
+* Set possible letters
+* Set random Dots
+* Set random Line
+* Set text color
+* Set dots color
+* Set line color
+* Change form label
+* Enable captcha border
+* Set captcha border color
+* Enable/Disable refresh button
+* Change refresh images as your theme
+* Not case sensitive
+In Short you can change captcha image style as your theme style. 
+
 
 == Installation ==
 
