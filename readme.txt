@@ -3,7 +3,7 @@ Contributors: http://plugins.web-mumbai.com/
 Tags: simple captcha, registration captcha, custom captcha image, register captcha image, theme my captcha
 Requires at least: 3.6
 Tested up to: 3.8.1
-Stable tag: 1.1
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,8 +71,8 @@ Automatic installation is the easiest option as WordPress handles the file trans
 5. Form Error and custom CSS
 
 == Frequently Asked Questions ==
-= Any detail documentation available
-yes, [Web Mumbai Plugins](http://plugins.web-mumbai.com/ "Web Mumbai Plugins").
+= Any detail documentation available? =
+yes, [Web Mumbai Plugins](http://plugins.web-mumbai.com/ "Web Mumbai Plugins") coming soon detail documentation.
 
 = If enable/disable registration, I loose my "WM Simple Captcha"
 No, change your setting of captcha image, then enable this for registration page.
