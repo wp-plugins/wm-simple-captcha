@@ -71,10 +71,11 @@ Automatic installation is the easiest option as WordPress handles the file trans
 5. Form Error and custom CSS
 
 == Frequently Asked Questions ==
-= Any detail documentation available? =
-yes, [Web Mumbai Plugins](http://plugins.web-mumbai.com/ "Web Mumbai Plugins") coming soon detail documentation.
 
-= If enable/disable registration, I loose my "WM Simple Captcha"
+= Any detail documentation available? =
+Yes, [Web Mumbai Plugins](http://plugins.web-mumbai.com/ "Web Mumbai Plugins") coming soon detail documentation.
+
+= If enable/disable registration, I loose my "WM Simple Captcha" =
 No, change your setting of captcha image, then enable this for registration page.
 
 = Can I change background color? =
