@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -18,13 +19,14 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 			
 			$wmsc_options 	= array_merge($defaults, $wmsc_options);
 			
-			//$this->print_array($wmsc_options);
-			
 			$_SESSION['wmsc_options'] = $wmsc_options;
 			
 			if (is_admin()) {	
 					$this->include_admin();
-					$this->settings = new WM_Simple_Captcha_Admin($filename);		
+					$this->settings = new WM_Simple_Captcha_Admin($filename);
+					register_deactivation_hook($filename, 	array(&$this, 'deactivate'));	// deactivation functions
+					register_activation_hook($filename, 	array(&$this, 'activate'));		// Activation functions
+					//register_uninstall_hook($filename, 		array('WM_Simple_Captcha_Front', 'uninstall') ); 	// Register an uninstall hook to automatically remove options
 			}else{
 				if($wmsc_options['captcha_enable_registration']){
 					//$this->print_array($_SESSION['wmsc_options']);
@@ -45,49 +47,15 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 		}
 		function define_constant($filename){
 			
-			if(!defined('WM_SIMPLE_CAPTCHA_FILE_PATH')) define( 'WM_SIMPLE_CAPTCHA_FILE_PATH', 	dirname( $filename ) );
-			if(!defined('WM_SIMPLE_CAPTCHA_DIR_NAME')) 	define( 'WM_SIMPLE_CAPTCHA_DIR_NAME', 	basename( WM_SIMPLE_CAPTCHA_FILE_PATH ) );
-			if(!defined('WM_SIMPLE_CAPTCHA_FOLDER')) 	define( 'WM_SIMPLE_CAPTCHA_FOLDER', 	dirname( plugin_basename( $filename ) ) );
-			if(!defined('WM_SIMPLE_CAPTCHA_NAME')) 		define(	'WM_SIMPLE_CAPTCHA_NAME', 		plugin_basename($filename) );
+			if(!defined('WM_SIMPLE_CAPTCHA_FILE_PATH')) 	define('WM_SIMPLE_CAPTCHA_FILE_PATH', 	dirname( $filename ) );
+			if(!defined('WM_SIMPLE_CAPTCHA_DIR_NAME')) 		define('WM_SIMPLE_CAPTCHA_DIR_NAME', 	basename( WM_SIMPLE_CAPTCHA_FILE_PATH ) );
+			if(!defined('WM_SIMPLE_CAPTCHA_FOLDER')) 		define('WM_SIMPLE_CAPTCHA_FOLDER', 		dirname( plugin_basename( $filename ) ) );
+			if(!defined('WM_SIMPLE_CAPTCHA_NAME')) 			define('WM_SIMPLE_CAPTCHA_NAME', 		plugin_basename($filename) );
 						
-			if(!defined('WM_SIMPLE_CAPTCHA_URL')) 		define( 'WM_SIMPLE_CAPTCHA_URL', 		WP_PLUGIN_URL ."/". WM_SIMPLE_CAPTCHA_DIR_NAME );
-			if(!defined('WM_SIMPLE_CAPTCHA_CODE_URL')) 	define( 'WM_SIMPLE_CAPTCHA_CODE_URL', 	WM_SIMPLE_CAPTCHA_URL ."/captcha_code/captcha_code.php" );	
-			if(!defined('WM_SIMPLE_CAPTCHA_FONT_PATH')) define( 'WM_SIMPLE_CAPTCHA_FONT_PATH',	WM_SIMPLE_CAPTCHA_FILE_PATH . '/fonts/');
-			
+			if(!defined('WM_SIMPLE_CAPTCHA_URL')) 			define('WM_SIMPLE_CAPTCHA_URL', 		WP_PLUGIN_URL ."/". WM_SIMPLE_CAPTCHA_DIR_NAME );
+			if(!defined('WM_SIMPLE_CAPTCHA_CODE_URL')) 		define('WM_SIMPLE_CAPTCHA_CODE_URL', 	WM_SIMPLE_CAPTCHA_URL ."/captcha_code/captcha_code.php" );	
+			if(!defined('WM_SIMPLE_CAPTCHA_FONT_PATH')) 	define('WM_SIMPLE_CAPTCHA_FONT_PATH',	WM_SIMPLE_CAPTCHA_FILE_PATH . '/fonts/');
 		}// End Function define_constant()
-		
-		function default_values(){
-			$default = array();	
-				$default["captcha_enable_registration"] 	= "0";
-				$default["captcha_image_width"] 			= "120";
-				$default["captcha_image_height"] 			= "40";
-				$default["captcha_image_characters"] 		= "4";
-				$default["captcha_image_font_adj"]			= "0.6";
-				$default["captcha_enable_space"]			= "0";
-				$default["captcha_image_font"] 				= "arial.ttf";
-				$default["captcha_possible_letters"] 		= "23456789";
-				$default["captcha_random_dots"] 			= "392";
-				$default["captcha_random_lines"] 			= "286";
-				$default["captcha_text_color"] 				= "#ffffff";
-				$default["captcha_dots_color"] 				= "#27d141";
-				$default["captcha_line_color"]				= "#ff2d2d";
-				$default["captcha_background_color"]		= "#f4f4f4";
-				$default["captcha_label"] 					= "Security Code";
-				$default["captcha_enable_css"] 				= "0";
-				$default["captcha_enable_border"] 			= "0";
-				$default["captcha_border_width"] 			= "1";
-				$default["captcha_border_type"]				= "solid";
-				$default["captcha_border_color"] 			= "#303030";
-				$default["captcha_enable_refresh_image"] 	= "0";
-				$default["captcha_enable_refresh"] 			= "0";
-				$default["captcha_refresh_image"] 			= "";
-				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
-				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
-				$default["captcha_custom_css"] 				= "";
-				return $default;
-		}// End Function define_constant()
-		
-		
 		
 		function registration_captcha_errors( $errors = NULL ) {
 			global $wmsc_options;
@@ -307,6 +275,85 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 				}
 			}
 		}// End Function print_array()
+		
+		function default_values(){
+				$default = array();	
+				$default["captcha_enable_registration"] 	= "0";
+				$default["captcha_image_width"] 			= "120";
+				$default["captcha_image_height"] 			= "40";
+				$default["captcha_image_characters"] 		= "4";
+				$default["captcha_image_font_adj"]			= "0.6";
+				$default["captcha_enable_space"]			= "0";
+				$default["captcha_image_font"] 				= "arial.ttf";
+				$default["captcha_possible_letters"] 		= "23456789";
+				$default["captcha_random_dots"] 			= "392";
+				$default["captcha_random_lines"] 			= "286";
+				$default["captcha_text_color"] 				= "#ffffff";
+				$default["captcha_dots_color"] 				= "#27d141";
+				$default["captcha_line_color"]				= "#ff2d2d";
+				$default["captcha_background_color"]		= "#f4f4f4";
+				$default["captcha_label"] 					= "Security Code";
+				$default["captcha_enable_css"] 				= "0";
+				$default["captcha_enable_border"] 			= "0";
+				$default["captcha_border_width"] 			= "1";
+				$default["captcha_border_type"]				= "solid";
+				$default["captcha_border_color"] 			= "#c4c4c4";
+				$default["captcha_enable_refresh_image"] 	= "0";
+				$default["captcha_enable_refresh"] 			= "0";
+				$default["captcha_refresh_image"] 			= "";
+				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
+				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
+				$default["captcha_custom_css"] 				= "";
+				return $default;
+		}// End Function define_constant()
+		
+		function activate() {
+				$default = array();
+				$default["captcha_enable_registration"] 	= "1";
+				$default["captcha_image_width"] 			= "120";
+				$default["captcha_image_height"] 			= "40";
+				$default["captcha_image_characters"] 		= "4";
+				$default["captcha_image_font_adj"]			= "0.6";
+				$default["captcha_enable_space"]			= "0";
+				$default["captcha_image_font"] 				= "arial.ttf";
+				$default["captcha_possible_letters"] 		= "23456789";
+				$default["captcha_random_dots"] 			= "392";
+				$default["captcha_random_lines"] 			= "286";
+				$default["captcha_text_color"] 				= "#ffffff";
+				$default["captcha_dots_color"] 				= "#27d141";
+				$default["captcha_line_color"]				= "#ff2d2d";
+				$default["captcha_background_color"]		= "#f4f4f4";
+				$default["captcha_label"] 					= "Security Code";
+				$default["captcha_enable_css"] 				= "1";
+				$default["captcha_enable_border"] 			= "0";
+				$default["captcha_border_width"] 			= "1";
+				$default["captcha_border_type"]				= "solid";
+				$default["captcha_border_color"] 			= "#c4c4c4";
+				$default["captcha_enable_refresh_image"] 	= "0";
+				$default["captcha_enable_refresh"] 			= "0";
+				$default["captcha_refresh_image"] 			= "";
+				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
+				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
+				$default["captcha_custom_css"] 				= "";			
+				add_option( 'wmsimplecaptcha', $default );	
+		
+		}
+		
+		/**
+		 * Deactivate
+		 * @return boolean
+		 */
+		function deactivate() {
+			delete_option('wmsimplecaptcha_activated_plugin_error');
+		}
+		
+		/**
+		 * Tidy up deleted plugin by removing options
+		 */
+		static function uninstall() {		
+			delete_option('wmsimplecaptcha');
+			delete_option('wmsimplecaptcha_activated_plugin_error');			
+		}
 		
 		
 		

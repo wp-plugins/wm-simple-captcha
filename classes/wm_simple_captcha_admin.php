@@ -13,10 +13,7 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 			global $wmsc_options;
 			if (is_admin()) {	
 				$this->plugin_name = "Simple Captcha";			
-				//echo $filename;
-				register_deactivation_hook($filename, 	array($this, 'deactivate'));	// deactivation functions
-				register_activation_hook($filename, 	array($this, 'activate'));		// Activation functions
-				register_uninstall_hook($filename, 		array('WM_Simple_Captcha_Admin', 'uninstall') ); 	// Register an uninstall hook to automatically remove options
+				
 				
 				add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
 				
@@ -114,8 +111,8 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 			
 			
 			
-			add_settings_section('custom_css_settings',				__( 'CSS Settings:', 'wmsimplecaptcha' ),					array( &$this, 'section_options_callback' ),	$option);
-			add_settings_field('captcha_enable_css',				__( 'Enable Plugin External CSS:', 'wmsimplecaptcha' ),								array( &$this, 'checkbox_element_callback' ),	$option, 'custom_css_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 'maxlength'=>'0',	'label_for'=>'captcha_enable_css',		'id'=> 'captcha_enable_css',								'default'=>0));
+			add_settings_section('custom_css_settings',				__( 'CSS Settings:', 'wmsimplecaptcha' ),							array( &$this, 'section_options_callback' ),	$option);
+			add_settings_field('captcha_enable_css',				__( 'Enable Plugin External CSS:', 'wmsimplecaptcha' ),				array( &$this, 'checkbox_element_callback' ),	$option, 'custom_css_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 'maxlength'=>'0',	'label_for'=>'captcha_enable_css',		'id'=> 'captcha_enable_css',								'default'=>0));
 			add_settings_field('captcha_custom_css',				__( 'Custom CSS:', 'wmsimplecaptcha' ),								array( &$this, 'textarea_element_callback' ), 	$option, 'custom_css_settings', 	array('menu'=> $option,	'cols'=>'45', 'class'=>'', 'rows'=>5,	'label_for'=>'captcha_custom_css',			'id'=> 'captcha_custom_css',								'default'=>''));
 			
 			// Register settings.
@@ -430,66 +427,7 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 				echo '</span></div></td></tr>';	
 				return;
 			}
-		}
-		
-		function activate() {
-			global $wmsimplecaptchafront;
-			$default = array();
-				$default["captcha_enable_registration"] 	= "1";
-				$default["captcha_image_width"] 			= "120";
-				$default["captcha_image_height"] 			= "40";
-				$default["captcha_image_characters"] 		= "4";
-				$default["captcha_image_font_adj"]			= "0.6";
-				$default["captcha_enable_space"]			= "0";
-				$default["captcha_image_font"] 				= "arial.ttf";
-				$default["captcha_possible_letters"] 		= "23456789";
-				$default["captcha_random_dots"] 			= "392";
-				$default["captcha_random_lines"] 			= "286";
-				$default["captcha_text_color"] 				= "#ffffff";
-				$default["captcha_dots_color"] 				= "#27d141";
-				$default["captcha_line_color"]				= "#ff2d2d";
-				$default["captcha_background_color"]		= "#f4f4f4";
-				$default["captcha_label"] 					= "Security Code";
-				$default["captcha_enable_css"] 				= "1";
-				$default["captcha_enable_border"] 			= "1";
-				$default["captcha_border_width"] 			= "1";
-				$default["captcha_border_type"]				= "solid";
-				$default["captcha_border_color"] 			= "#303030";
-				$default["captcha_enable_refresh_image"] 	= "1";
-				$default["captcha_enable_refresh"] 			= "1";
-				$default["captcha_refresh_image"] 			= "";
-				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
-				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
-				$default["captcha_custom_css"] 				= "";
-				
-			add_option( 'wmsimplecaptcha', $default );	
-			return true;
-		}
-		
-		/**
-		 * Deactivate
-		 * @return boolean
-		 */
-		function deactivate() {
-			delete_option('wmsimplecaptcha_activated_plugin_error');
-			//for testing
-			//update_option('wmsimplecaptcha', array());	
-			//delete_option('wmsimplecaptcha_per_page_default');
-			//delete_option('wmsimplecaptcha_activated_plugin_error');
-			return true;
-		}
-		
-		/**
-		 * Tidy up deleted plugin by removing options
-		 */
-		static function uninstall() {
-			delete_option( 'wmsimplecaptcha');
-			delete_option( 'wmsimplecaptcha_per_page_default');
-			delete_option( 'wmsimplecaptcha_activated_plugin_error');
-			return true;
-		}
-		
-		
+		}		
 		
 		public function wmsimplecaptcha_settings_page(){
 			global $wmsc_options;
