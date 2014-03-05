@@ -4,7 +4,7 @@
  * Plugin URI: http://plugins.web-mumbai.com/
  * Description: "WM Simple Captcha" for registration page, customize captcha image according to your theme.
  * Version: 1.1
- * Author: Web Mumbai
+ * Author: WebMumbai
  * Author URI: http://plugins.web-mumbai.com/
  * License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */ 
