@@ -1,5 +1,5 @@
 === WM Simple Captcha ===
-Contributors: Web Mumbai
+Contributors: WebMumbai
 Tags: simple captcha, registration captcha, custom captcha image, register captcha image, theme my captcha
 Requires at least: 3.6
 Tested up to: 3.8.1
