@@ -86,6 +86,12 @@ Yes, see the plugin settings page.
 
 
 == Upgrade Notice ==
+= 1.1.1 =
+* Bugfix : We fixed error on activation.
+* Tested : Wordpress 3.8.1
+* Tested : Wordpress 3.8.2
+* Tested : Wordpress 3.8.3
+* Tested : Wordpress 3.9
 = 1.1 =
 * Added : added 'uninstall.php' in 'wm-simple-captcha' root folder. When using 'uninstall.php' the plugin should always check for the WP_UNINSTALL_PLUGIN constant, before executing. The WP_UNINSTALL_PLUGIN constant is defined by WordPress at runtime during a plugin uninstall, it will not be present if 'uninstall.php' is requested directly.
 * Removed : register_uninstall_hook().
