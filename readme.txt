@@ -101,6 +101,13 @@ Yes, see the plugin settings page.
 * Added: First working release of the Plugin
 
 == Changelog ==
+= 1.1.1 =
+* Bugfix : We fixed error on activation.
+* Tested : Wordpress 3.8.1
+* Tested : Wordpress 3.8.2
+* Tested : Wordpress 3.8.3
+* Tested : Wordpress 3.9
+
 = 1.1 =
 * Bugfix : We fixed error on activation.
 
