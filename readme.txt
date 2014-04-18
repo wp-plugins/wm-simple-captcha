@@ -1,9 +1,9 @@
 === WM Simple Captcha ===
-Contributors: WebMumbai
+Contributors: http://plugins.web-mumbai.com/
 Tags: simple captcha, registration captcha, custom captcha image, register captcha image, theme my captcha
 Requires at least: 3.6
-Tested up to: 3.8.1
-Stable tag: 1.1
+Tested up to: 3.9
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Captcha image for registration page, customize according to your theme.
 
 == Description ==
 
-"WM Simple Captcha" for registration page, customize captcha image according to your theme. Change image width, height, background color, set possible characters, add space between two characters, adjust font size, change form label, add your custom css, enable/disable refresh button, change refresh button. Many think more on customization.
+WM Simple Captcha for registration page, customize captcha image according to your theme. Change image width, height, background color, set possible characters, add space between two characters, adjust font size, change form label, add your custom css, enable/disable refresh button, change refresh button. Many think more on customization.
 
 = Features =
 
