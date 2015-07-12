@@ -3,7 +3,7 @@
  * Plugin Name: WM Simple Captcha
  * Plugin URI: http://plugins.web-mumbai.com/
  * Description: "WM Simple Captcha" for registration page, customize captcha image according to your theme.
- * Version: 1.1.2
+ * Version: 2.0
  * Author: Web Mumbai
  * Author URI: http://plugins.web-mumbai.com/
  * License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
