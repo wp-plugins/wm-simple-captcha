@@ -18,6 +18,9 @@ if(isset($_SESSION['wmsc_options'])){
 	$captcha_dots_color			= "0x".$wmsc_options['captcha_dots_color'];
 	$captcha_line_color 		= "0x".$wmsc_options['captcha_line_color'];
 	$captcha_background_color	= "0x".$wmsc_options['captcha_background_color'];
+	$font_path					= $wmsc_options['font_path'];
+	
+	
 }else{
 	$image_width 				= 120;
 	$image_height 				= 25;
@@ -32,12 +35,15 @@ if(isset($_SESSION['wmsc_options'])){
 	$captcha_background_color 	= "0xFFFFFF";
 	$captcha_enable_space		= 0;
 	$captcha_image_font_adj		= "0.6";
+	$font_path					= "../fonts/";
 }
 
 $code 			= '';
 $code_string 	= '';
 $space 			= '';
-$font 			= "../fonts/".$font;
+$font 			= $font_path.$font;
+
+if(!file_exists($font)) $font = "../fonts/arial.ttf";
 
 if($captcha_enable_space == 1) $space = ' ';
 

@@ -20,7 +20,7 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 					$this->include_admin();
 					$this->settings = new WM_Simple_Captcha_Admin($filename);
 					register_deactivation_hook($filename, 	array(&$this, 'deactivate'));	// deactivation functions
-					register_activation_hook($filename, 	array(&$this, 'activate'));		// Activation functions
+					//register_activation_hook($filename, 	array(&$this, 'activate'));		// Activation functions
 					//register_uninstall_hook($filename, 		array('WM_Simple_Captcha_Front', 'uninstall') ); 	// Register an uninstall hook to automatically remove options
 			}else{
 				if($wmsc_options['captcha_enable_registration']){
@@ -28,6 +28,12 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 					add_action( 'register_form', 			array(&$this, 'wmcaptcha_display'),100,1);		
 					add_action( 'registration_errors', 		array(&$this, 'registration_captcha_errors'),20,1);	
 					add_action( 'init', 					array(&$this, 'wmsimplecaptcha_scripts_front'),20,1);
+					
+					
+					//For login screen
+					//add_action( 'login_form', array(&$this, 'wmcaptcha_display'),100,1);
+					//add_filter( 'authenticate', array(&$this, 'registration_captcha_errors'),22,1);	
+	
 				}
 			}
 			if($wmsc_options['captcha_enable_registration']){
@@ -42,6 +48,8 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 		}
 		function define_constant($filename){
 			
+			$uploads = $this->font_upload_dir('dir');
+			
 			if(!defined('WM_SIMPLE_CAPTCHA_FILE_PATH')) 	define('WM_SIMPLE_CAPTCHA_FILE_PATH', 	dirname( $filename ) );
 			if(!defined('WM_SIMPLE_CAPTCHA_DIR_NAME')) 		define('WM_SIMPLE_CAPTCHA_DIR_NAME', 	basename( WM_SIMPLE_CAPTCHA_FILE_PATH ) );
 			if(!defined('WM_SIMPLE_CAPTCHA_FOLDER')) 		define('WM_SIMPLE_CAPTCHA_FOLDER', 		dirname( plugin_basename( $filename ) ) );
@@ -50,6 +58,10 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 			if(!defined('WM_SIMPLE_CAPTCHA_URL')) 			define('WM_SIMPLE_CAPTCHA_URL', 		WP_PLUGIN_URL ."/". WM_SIMPLE_CAPTCHA_DIR_NAME );
 			if(!defined('WM_SIMPLE_CAPTCHA_CODE_URL')) 		define('WM_SIMPLE_CAPTCHA_CODE_URL', 	WM_SIMPLE_CAPTCHA_URL ."/captcha_code/captcha_code.php" );	
 			if(!defined('WM_SIMPLE_CAPTCHA_FONT_PATH')) 	define('WM_SIMPLE_CAPTCHA_FONT_PATH',	WM_SIMPLE_CAPTCHA_FILE_PATH . '/fonts/');
+			
+			if(!defined('WM_SIMPLE_CAPTCHA_NEW_FONT_PATH')) 	define('WM_SIMPLE_CAPTCHA_NEW_FONT_PATH',	$uploads  . '/wm_simple_captcha_fonts/');
+			
+			
 		}// End Function define_constant()
 		
 		function registration_captcha_errors( $errors = NULL ) {
@@ -57,8 +69,9 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 			
 			$err = $this->captcha_errors();			
 			if($err){
-				if($errors == NULL) global $errors;
+				//if($errors == NULL) global $errors;
 				if($errors == NULL) $errors = new WP_Error();
+				$errors = new WP_Error();
 				if($err == "empty"){
 					$errors->add( 'recaptcha', __( str_replace("ERROR:","<strong>ERROR: </strong>", $wmsc_options['captcha_empty']), 'wmsimplecaptcha' ), 'invalid-site-private-key' );
 				}
@@ -299,6 +312,8 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
 				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
 				$default["captcha_custom_css"] 				= "";
+				$default["font_path"] 						= WM_SIMPLE_CAPTCHA_NEW_FONT_PATH;
+				
 				
 				$wmsc_options = get_option('wmsimplecaptcha');
 				
@@ -338,9 +353,8 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
 				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
 				$default["captcha_custom_css"] 				= "";			
-				//add_option( 'wmsimplecaptcha', $default );
+				add_option( 'wmsimplecaptcha', $default );
 				return $default;
-		
 		}
 		
 		/**
@@ -359,7 +373,23 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 			delete_option('wmsimplecaptcha_activated_plugin_error');			
 		}
 		
+		function font_upload_dir( $type = false ) {
+			$uploads = wp_upload_dir();
 		
+			$uploads = apply_filters( 'wm-simple-captcha-dir', array(
+				'dir' => $uploads['basedir'],
+				'url' => $uploads['baseurl'] ) );
 		
+			if ( 'dir' == $type ){
+				
+				
+				return $uploads['dir'];
+			}if ( 'url' == $type )
+				return $uploads['url'];
+				
+			
+		
+			return $uploads;
+		}
 	}// End Class WM_Simple_Captcha_Front()
 }
