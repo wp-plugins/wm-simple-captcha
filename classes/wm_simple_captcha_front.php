@@ -46,22 +46,16 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 		public function include_admin() {
 			include_once( 'wm_simple_captcha_admin.php' );
 		}
-		function define_constant($filename){
-			
-			$uploads = $this->font_upload_dir('dir');
-			
-			if(!defined('WM_SIMPLE_CAPTCHA_FILE_PATH')) 	define('WM_SIMPLE_CAPTCHA_FILE_PATH', 	dirname( $filename ) );
-			if(!defined('WM_SIMPLE_CAPTCHA_DIR_NAME')) 		define('WM_SIMPLE_CAPTCHA_DIR_NAME', 	basename( WM_SIMPLE_CAPTCHA_FILE_PATH ) );
-			if(!defined('WM_SIMPLE_CAPTCHA_FOLDER')) 		define('WM_SIMPLE_CAPTCHA_FOLDER', 		dirname( plugin_basename( $filename ) ) );
-			if(!defined('WM_SIMPLE_CAPTCHA_NAME')) 			define('WM_SIMPLE_CAPTCHA_NAME', 		plugin_basename($filename) );
-						
-			if(!defined('WM_SIMPLE_CAPTCHA_URL')) 			define('WM_SIMPLE_CAPTCHA_URL', 		WP_PLUGIN_URL ."/". WM_SIMPLE_CAPTCHA_DIR_NAME );
-			if(!defined('WM_SIMPLE_CAPTCHA_CODE_URL')) 		define('WM_SIMPLE_CAPTCHA_CODE_URL', 	WM_SIMPLE_CAPTCHA_URL ."/captcha_code/captcha_code.php" );	
-			if(!defined('WM_SIMPLE_CAPTCHA_FONT_PATH')) 	define('WM_SIMPLE_CAPTCHA_FONT_PATH',	WM_SIMPLE_CAPTCHA_FILE_PATH . '/fonts/');
-			
-			if(!defined('WM_SIMPLE_CAPTCHA_NEW_FONT_PATH')) 	define('WM_SIMPLE_CAPTCHA_NEW_FONT_PATH',	$uploads  . '/wm_simple_captcha_fonts/');
-			
-			
+		function define_constant($filename){			
+			$uploads = $this->font_upload_dir('dir');			
+			if(!defined('WM_SIMPLE_CAPTCHA_FILE_PATH')) 		define('WM_SIMPLE_CAPTCHA_FILE_PATH', 		dirname( $filename ) );
+			if(!defined('WM_SIMPLE_CAPTCHA_DIR_NAME')) 			define('WM_SIMPLE_CAPTCHA_DIR_NAME', 		basename( WM_SIMPLE_CAPTCHA_FILE_PATH ) );
+			if(!defined('WM_SIMPLE_CAPTCHA_NAME')) 				define('WM_SIMPLE_CAPTCHA_NAME', 			plugin_basename($filename));
+			if(!defined('WM_SIMPLE_CAPTCHA_FOLDER')) 			define('WM_SIMPLE_CAPTCHA_FOLDER', 			dirname(WM_SIMPLE_CAPTCHA_NAME));
+			if(!defined('WM_SIMPLE_CAPTCHA_URL')) 				define('WM_SIMPLE_CAPTCHA_URL', 			WP_PLUGIN_URL ."/". WM_SIMPLE_CAPTCHA_DIR_NAME );
+			if(!defined('WM_SIMPLE_CAPTCHA_CODE_URL')) 			define('WM_SIMPLE_CAPTCHA_CODE_URL', 		WM_SIMPLE_CAPTCHA_URL ."/captcha_code/captcha_code.php" );	
+			if(!defined('WM_SIMPLE_CAPTCHA_FONT_PATH')) 		define('WM_SIMPLE_CAPTCHA_FONT_PATH',		WM_SIMPLE_CAPTCHA_FILE_PATH . '/fonts/');			
+			if(!defined('WM_SIMPLE_CAPTCHA_NEW_FONT_PATH')) 	define('WM_SIMPLE_CAPTCHA_NEW_FONT_PATH',	$uploads  . '/wm_simple_captcha_fonts/');			
 		}// End Function define_constant()
 		
 		function registration_captcha_errors( $errors = NULL ) {
@@ -285,6 +279,11 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 		}// End Function print_array()
 		
 		function default_values(){
+			
+				if(isset($_SESSION['wmsc_options'])){
+					//return $_SESSION['wmsc_options'];
+				}
+				
 				$default = array();	
 				$default["captcha_enable_registration"] 	= "0";
 				$default["captcha_image_width"] 			= "120";
@@ -315,17 +314,18 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 				$default["font_path"] 						= WM_SIMPLE_CAPTCHA_NEW_FONT_PATH;
 				
 				
-				$wmsc_options = get_option('wmsimplecaptcha');
-				
+				//delete_option('wmsimplecaptcha');
+				$wmsc_options 	= get_option('wmsimplecaptcha');
 				if(!$wmsc_options){
-					$default = $this->activate();
-					add_option('wmsimplecaptcha', $default);
-				}				
+					$default 		= $this->activate();
+					return $default;
+				}
+				
 				$wmsc_options 	= array_merge((array)$default, (array)$wmsc_options);				
 				return $wmsc_options;
 		}// End Function define_constant()
 		
-		function activate() {
+		public static function activate() {
 				$default = array();
 				$default["captcha_enable_registration"] 	= "1";
 				$default["captcha_image_width"] 			= "120";
@@ -352,7 +352,8 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 				$default["captcha_refresh_image"] 			= "";
 				$default["captcha_empty"] 					= "ERROR: Please enter security code.";
 				$default["captcha_invalid"] 				= "ERROR: Please enter valid security code.";
-				$default["captcha_custom_css"] 				= "";			
+				$default["captcha_custom_css"] 				= "";
+				//$default["font_path"] 						= WM_SIMPLE_CAPTCHA_NEW_FONT_PATH;			
 				add_option( 'wmsimplecaptcha', $default );
 				return $default;
 		}
@@ -361,14 +362,14 @@ if ( ! class_exists( 'WM_Simple_Captcha_Front' ) ) {
 		 * Deactivate
 		 * @return boolean
 		 */
-		function deactivate() {
+		public static function deactivate() {
 			delete_option('wmsimplecaptcha_activated_plugin_error');
 		}
 		
 		/**
 		 * Tidy up deleted plugin by removing options
 		 */
-		static function uninstall() {		
+		public static  function uninstall() {		
 			delete_option('wmsimplecaptcha');
 			delete_option('wmsimplecaptcha_activated_plugin_error');			
 		}

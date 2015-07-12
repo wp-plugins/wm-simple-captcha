@@ -20,12 +20,12 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 				add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
 				
 				if((isset($_GET['page']) && $_GET['page'] == "wmsimplecaptcha_settings_page") || (isset($_REQUEST['option_page']) && $_REQUEST['option_page'] == "wmsimplecaptcha")){
-					add_action( 'admin_init',	array( &$this, 'font_exist' ) ); 
-					add_action( 'admin_notices',	array( &$this, 'admin_notices' ) ); 
-					add_action( 'admin_init',	array( &$this, 'init_settings' ) ); // Registers settings
+					add_action( 'admin_init',			array( &$this, 'font_exist' ) ); 
+					add_action( 'admin_notices',		array( &$this, 'admin_notices' ) ); 
+					add_action( 'admin_init',			array( &$this, 'init_settings' ) ); // Registers settings
 					
-					add_action('admin_print_scripts', array( $this, 'wp_gear_manager_admin_scripts'));
-					add_action('admin_print_styles', array( $this, 'wp_gear_manager_admin_styles'));				
+					add_action('admin_print_scripts', 	array( $this, 'wp_gear_manager_admin_scripts'));
+					add_action('admin_print_styles', 	array( $this, 'wp_gear_manager_admin_styles'));				
 				}
 												
 				// Settings Link for Plugin page
@@ -91,28 +91,28 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 		  	add_settings_field('captcha_possible_letters',				__( 'Captcha Possible Letters:', 'wmsimplecaptcha' ),			array( &$this, 'select_element_callback' ),		$option, 'plugin_settings', array('menu'=> $option,	'size'=>80, 'class'=>'', 'maxlength'=>'70',	'label_for'=>'captcha_possible_letters',		'id'=> 'captcha_possible_letters',		'default'=>'23456789',	'options'=>$this->captcha_possible_letters()));
 			add_settings_field('captcha_random_dots',					__( 'Captcha Random Dots:', 'wmsimplecaptcha' ),				array( &$this, 'select_element_callback' ),		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'', 'maxlength'=>'1',	'label_for'=>'captcha_random_dots',				'id'=> 'captcha_random_dots',			'default'=>0,		'options'=>$this->number_array(0,999),'first_option'=>"Select Dots"));
 			add_settings_field('captcha_random_lines',					__( 'Captcha Random Lines:', 'wmsimplecaptcha' ),				array( &$this, 'select_element_callback' ),		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'', 'maxlength'=>'1',	'label_for'=>'captcha_random_lines',			'id'=> 'captcha_random_lines',			'default'=>0,		'options'=>$this->number_array(0,999),'first_option'=>"Select line"));
-			add_settings_field('captcha_text_color',					__( 'Captcha Text Color:', 'wmsimplecaptcha' ),					array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback', 'maxlength'=>'7',	'label_for'=>'captcha_text_color',				'id'=> 'captcha_text_color',			'default'=>'142864'));
-			add_settings_field('captcha_dots_color',					__( 'Captcha Dots Color:', 'wmsimplecaptcha' ),					array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback', 'maxlength'=>'7',	'label_for'=>'captcha_dots_color',				'id'=> 'captcha_dots_color',			'default'=>'142864'));
-			add_settings_field('captcha_line_color',					__( 'Captcha Lines Color:', 'wmsimplecaptcha' ),				array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback', 'maxlength'=>'7',	'label_for'=>'captcha_line_color',				'id'=> 'captcha_line_color',			'default'=>'142864'));
-			add_settings_field('captcha_background_color',				__( 'Captcha Background Color:', 'wmsimplecaptcha' ),			array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback', 'maxlength'=>'7',	'label_for'=>'captcha_background_color',		'id'=> 'captcha_background_color',		'default'=>'FFFFFF'));
+			add_settings_field('captcha_text_color',					__( 'Captcha Text Color:', 'wmsimplecaptcha' ),					array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback', 			'maxlength'=>'7',	'label_for'=>'captcha_text_color',				'id'=> 'captcha_text_color',			'default'=>'#ffffff'));
+			add_settings_field('captcha_dots_color',					__( 'Captcha Dots Color:', 'wmsimplecaptcha' ),					array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback',			'maxlength'=>'7',	'label_for'=>'captcha_dots_color',				'id'=> 'captcha_dots_color',			'default'=>'#27d141'));
+			add_settings_field('captcha_line_color',					__( 'Captcha Lines Color:', 'wmsimplecaptcha' ),				array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback',			'maxlength'=>'7',	'label_for'=>'captcha_line_color',				'id'=> 'captcha_line_color',			'default'=>'#ff2d2d'));
+			add_settings_field('captcha_background_color',				__( 'Captcha Background Color:', 'wmsimplecaptcha' ),			array( &$this, 'color_picker_callback' ), 		$option, 'plugin_settings', array('menu'=> $option,	'size'=>15,	'class'=>'color_picker_callback', 			'maxlength'=>'7',	'label_for'=>'captcha_background_color',		'id'=> 'captcha_background_color',		'default'=>'#f4f4f4'));
 			
 			add_settings_section('captcha_form_settings',				__( 'Form Settings:', 'wmsimplecaptcha' ),						array( &$this, 'section_options_callback' ),	$option);				
-			add_settings_field('captcha_label',							__( 'Captcha Label:', 'wmsimplecaptcha' ),						array( &$this, 'text_element_callback' ), 		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>48, 'class'=>'', 'maxlength'=>'100',	'label_for'=>'captcha_label',			'id'=> 'captcha_label',									'default'=>'Security Code'));
+			add_settings_field('captcha_label',							__( 'Captcha Label:', 'wmsimplecaptcha' ),						array( &$this, 'text_element_callback' ), 		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>48, 'class'=>'',						'maxlength'=>'100',	'label_for'=>'captcha_label',					'id'=> 'captcha_label',					'default'=>'Security Code'));
 			
 			
-			add_settings_field('captcha_enable_border',					__( 'Enable Border:', 'wmsimplecaptcha' ),						array( &$this, 'checkbox_element_callback' ),	$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'maxlength'=>'0',	'label_for'=>'captcha_enable_border',		'id'=> 'captcha_enable_border',										'default'=>0));
-			add_settings_field('captcha_border_width',					__( 'Captcha Border width:', 'wmsimplecaptcha' ),				array( &$this, 'select_element_callback' ),		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 'maxlength'=>'1',	'label_for'=>'captcha_border_width',		'id'=> 'captcha_border_width',							'default'=>0,		'options'=>$this->number_array(0,10),'first_option'=>"Select Characters"));
+			add_settings_field('captcha_enable_border',					__( 'Enable Border:', 'wmsimplecaptcha' ),						array( &$this, 'checkbox_element_callback' ),	$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 									'maxlength'=>'0',	'label_for'=>'captcha_enable_border',			'id'=> 'captcha_enable_border',			'default'=>0));
+			add_settings_field('captcha_border_width',					__( 'Captcha Border width:', 'wmsimplecaptcha' ),				array( &$this, 'select_element_callback' ),		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 						'maxlength'=>'1',	'label_for'=>'captcha_border_width',			'id'=> 'captcha_border_width',			'default'=>0,		'options'=>$this->number_array(0,10),'first_option'=>"Select Characters"));
 			
-			add_settings_field('captcha_border_type',					__( 'Captcha Border type:', 'wmsimplecaptcha' ),				array( &$this, 'select_element_callback' ),		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 'maxlength'=>'1',	'label_for'=>'captcha_border_type',		'id'=> 'captcha_border_type',								'default'=>0,		'options'=>$border_style,'first_option'=>"Select Border Type"));
-			add_settings_field('captcha_border_color',					__( 'Captcha Border Color:', 'wmsimplecaptcha' ),				array( &$this, 'color_picker_callback' ), 		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'color_picker_callback', 'maxlength'=>'7',	'label_for'=>'captcha_border_color',		'id'=> 'captcha_border_color',		'default'=>'FFFFFF'));
+			add_settings_field('captcha_border_type',					__( 'Captcha Border type:', 'wmsimplecaptcha' ),				array( &$this, 'select_element_callback' ),		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 						'maxlength'=>'1',	'label_for'=>'captcha_border_type',				'id'=> 'captcha_border_type',			'default'=>0,		'options'=>$border_style,'first_option'=>"Select Border Type"));
+			add_settings_field('captcha_border_color',					__( 'Captcha Border Color:', 'wmsimplecaptcha' ),				array( &$this, 'color_picker_callback' ), 		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'color_picker_callback', 	'maxlength'=>'7',	'label_for'=>'captcha_border_color',			'id'=> 'captcha_border_color',			'default'=>'#c4c4c4'));
 			
-			add_settings_field('captcha_enable_refresh_image',			__( 'Enable Refresh Button on image:', 'wmsimplecaptcha' ),		array( &$this, 'checkbox_element_callback' ),	$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 'maxlength'=>'0',	'label_for'=>'captcha_enable_refresh_image',	'id'=> 'captcha_enable_refresh_image',				'default'=>0));
-			add_settings_field('captcha_enable_refresh',				__( 'Enable Refresh Button:', 'wmsimplecaptcha' ),				array( &$this, 'checkbox_element_callback' ),	$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 'maxlength'=>'0',	'label_for'=>'captcha_enable_refresh',	'id'=> 'captcha_enable_refresh',							'default'=>0));
-			add_settings_field('captcha_refresh_image',					__( 'Captcha Refresh Image:', 'wmsimplecaptcha' ),				array( &$this, 'choose_image_callback' ), 		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>48, 'class'=>'', 'maxlength'=>'100',	'label_for'=>'captcha_refresh_image',			'id'=> 'captcha_refresh_image',					'default'=>'', 'choose_id'=>'upload_refresh_image_button'));
+			add_settings_field('captcha_enable_refresh_image',			__( 'Enable Refresh Button on image:', 'wmsimplecaptcha' ),		array( &$this, 'checkbox_element_callback' ),	$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'',						'maxlength'=>'0',	'label_for'=>'captcha_enable_refresh_image',	'id'=> 'captcha_enable_refresh_image',	'default'=>0));
+			add_settings_field('captcha_enable_refresh',				__( 'Enable Refresh Button:', 'wmsimplecaptcha' ),				array( &$this, 'checkbox_element_callback' ),	$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>15, 'class'=>'', 						'maxlength'=>'0',	'label_for'=>'captcha_enable_refresh',			'id'=> 'captcha_enable_refresh',		'default'=>0));
+			add_settings_field('captcha_refresh_image',					__( 'Captcha Refresh Image:', 'wmsimplecaptcha' ),				array( &$this, 'choose_image_callback' ), 		$option, 'captcha_form_settings', array('menu'=> $option,	'size'=>48, 'class'=>'', 						'maxlength'=>'100',	'label_for'=>'captcha_refresh_image',			'id'=> 'captcha_refresh_image',			'default'=>'', 'choose_id'=>'upload_refresh_image_button'));
 	
 			add_settings_section('captcha_error_settings',				__( 'Form Error:', 'wmsimplecaptcha' ),							array( &$this, 'section_options_callback' ),	$option);
-			add_settings_field('captcha_empty',							__( 'Captcha Empty:', 'wmsimplecaptcha' ),						array( &$this, 'text_element_callback' ), 		$option, 'captcha_error_settings', array('menu'=> $option,	'size'=>48, 'class'=>'', 'maxlength'=>'200',	'label_for'=>'captcha_empty',			'id'=> 'captcha_empty',									'default'=>'Please enter security code.'));
-			add_settings_field('captcha_invalid',						__( 'Captcha Invalid:', 'wmsimplecaptcha' ),					array( &$this, 'text_element_callback' ), 		$option, 'captcha_error_settings', array('menu'=> $option,	'size'=>48, 'class'=>'', 'maxlength'=>'200',	'label_for'=>'captcha_invalid',			'id'=> 'captcha_invalid',								'default'=>'Please enter valid security code.'));
+			add_settings_field('captcha_empty',							__( 'Captcha Empty:', 'wmsimplecaptcha' ),						array( &$this, 'text_element_callback' ), 		$option, 'captcha_error_settings', array('menu'=> $option,	'size'=>48, 'class'=>'',						'maxlength'=>'200',	'label_for'=>'captcha_empty',					'id'=> 'captcha_empty',					'default'=>'Please enter security code.'));
+			add_settings_field('captcha_invalid',						__( 'Captcha Invalid:', 'wmsimplecaptcha' ),					array( &$this, 'text_element_callback' ), 		$option, 'captcha_error_settings', array('menu'=> $option,	'size'=>48, 'class'=>'', 						'maxlength'=>'200',	'label_for'=>'captcha_invalid',					'id'=> 'captcha_invalid',				'default'=>'Please enter valid security code.'));
 			
 			
 			
@@ -284,6 +284,7 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 		
 		
 		public function captcha_preview_callback($args){
+			//$this->print_array($_SESSION['wmsc_options']);
 			echo '<img src="'.WM_SIMPLE_CAPTCHA_CODE_URL."?rand=".rand(2,5).'" class="captcha_code_img" id="captcha_code_file"  />';
 		}
 		
@@ -295,15 +296,16 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 			$class 		= isset( $args['class'] ) 		? ' class="_'.$args['class'] .'"': '';
 			$maxlength	= isset( $args['maxlength'] ) 	? ' maxlength="'.$args['maxlength'] .'"': '';
 			$options	= get_option( $menu );
+			$default 	= isset( $args['default'] ) ? $args['default'] : '';
 					
 			if ( isset( $options[$id] ) ) {
 				$current = $options[$id];
 			} else {
-				$current = isset( $args['default'] ) ? $args['default'] : '';
+				$current = $default;
 			}
 	
 			$disabled = (isset( $args['disabled'] )) ? ' disabled' : '';
-			$html = sprintf( '<input type="text" id="%1$s" name="%2$s[%1$s]" value="%3$s"  size="%4$s"%5$s%6$s%7$s />', $id, $menu, $current, $size, $disabled, $class, $maxlength);
+			$html = sprintf( '<input type="text" id="%1$s" name="%2$s[%1$s]" value="%3$s"  size="%4$s"%5$s%6$s%7$s data-default-color="%8$s" />', $id, $menu, $current, $size, $disabled, $class, $maxlength, $default);
 		
 			// Displays option description.
 			if ( isset( $args['description'] ) ) {
@@ -339,7 +341,7 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
 			$disabled = (isset( $args['disabled'] )) ? ' disabled' : '';
 			$html = "";
 			$html .= sprintf( '<input type="text" id="%1$s" name="%2$s[%1$s]" value="%3$s"  size="%4$s"%5$s%6$s%7$s />', $id, $menu, $current, $size, $disabled, $class, $maxlength);			
-			$html .= sprintf( '<a id="%1$s" class="button%2$s" data-choose="%3$s" data-update="%4$s">%5$s</a>',$choose_id,$choose_class,$choose_data, $choose_update, $choose_label);
+			$html .= sprintf( '<a id="%1$s" class="button button-primary%2$s" data-choose="%3$s" data-update="%4$s">%5$s</a>',$choose_id,$choose_class,$choose_data, $choose_update, $choose_label);
 
 			// Displays option description.
 			if ( isset( $args['description'] ) ) {
@@ -472,6 +474,7 @@ if ( ! class_exists( 'WM_Simple_Captcha_Admin' ) ) {
                 ?>
             </form>
             <?php
+			//unset($_SESSION['wmsc_options']);
 		}
 		
 		function font_upload(){
